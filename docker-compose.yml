@@ -14,18 +14,18 @@ services:
   users:
     build: https://github.com/moviesalreadytaken/user_service.git
     ports:
-      - '10001:10001'
+      - '10001:10001' #optional
   movies:
     build: https://github.com/moviesalreadytaken/movie_service.git
     ports:
-      - '10002:10002'
+      - '10002:10002' #optional
   recommendations:
     build: https://github.com/moviesalreadytaken/recommendation_service.git
     environment:
       - USERS_URL=http://users:10001
       - MOVIES_URL=http://movies:10002
     ports:
-      - '10003:10003'
+      - '10003:10003' #optional
     depends_on:
       - movies
       - users
