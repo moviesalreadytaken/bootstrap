@@ -1,0 +1,33 @@
+services:
+  gateway:
+    build: https://github.com/moviesalreadytaken/gateway.git
+    depends_on:
+      - users
+      - movies
+      - recommendations
+    ports:
+      - '10000:10000'
+    environment:
+      - USERS_URL=http://users:10001
+      - MOVIES_URL=http://movies:10002
+      - RECOM_URL=http://recommendations:10003
+  users:
+    build: https://github.com/moviesalreadytaken/user_service.git
+    ports:
+      - '10001:10001'
+  movies:
+    build: https://github.com/moviesalreadytaken/movie_service.git
+    ports:
+      - '10002:10002'
+  recommendations:
+    build: https://github.com/moviesalreadytaken/recommendation_service.git
+    environment:
+      - USERS_URL=http://users:10001
+      - MOVIES_URL=http://movies:10002
+    ports:
+      - '10003:10003'
+    depends_on:
+      - movies
+      - users
+networks:
+  backend:
